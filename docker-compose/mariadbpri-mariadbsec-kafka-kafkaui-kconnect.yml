@@ -1,0 +1,95 @@
+version: '3'
+
+services:
+    # docker run --rm --name mariadb-primary -e MYSQL_ROOT_PASSWORD=mypass -p 3306:3306 -v ./mariadb-confs/master/50-server.cnf:/etc/mysql/mariadb.conf.d/50-server.cnf -v ./mariadb-confs/master/init.sql:/docker-entrypoint-initdb.d/init.sql -d mariadb:10.5
+    mariadb-primary:
+        image: mariadb:10.5
+        container_name: mariadb-primary
+        environment:
+            - MYSQL_ROOT_PASSWORD=mypass
+        ports:
+            - 3306:3306
+        volumes:
+            - ./mariadb-confs/master/50-server.cnf:/etc/mysql/mariadb.conf.d/50-server.cnf
+            - ./mariadb-confs/master/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+    # docker run --rm --name mariadb-slave -e MYSQL_ROOT_PASSWORD=mypass -p 3307:3306 -v ./mariadb-confs/slave/50-server.cnf:/etc/mysql/mariadb.conf.d/50-server.cnf -v ./mariadb-confs/slave/init.sql:/docker-entrypoint-initdb.d/init.sql -d mariadb:10.5
+    mariadb-slave:
+        image: mariadb:10.5
+        container_name: mariadb-slave-2
+        environment:
+            - MYSQL_ROOT_PASSWORD=mypass
+        ports:
+            - 3307:3306
+        volumes:
+            - ./mariadb-confs/slave/50-server.cnf:/etc/mysql/mariadb.conf.d/50-server.cnf
+            - ./mariadb-confs/slave/init.sql:/docker-entrypoint-initdb.d/init.sql
+        depends_on:
+            - mariadb-primary
+
+
+    zookeeper:
+        image: confluentinc/cp-zookeeper
+        container_name: zookeeper
+        ports:
+            - "2181:2181"
+            - "2888:2888"
+            - "3888:3888"
+        environment:
+            ZOOKEEPER_CLIENT_PORT: 2181
+        deploy:
+            resources:
+                reservations:
+                    memory: "256m"
+
+    kafka:
+        image: confluentinc/cp-kafka
+        container_name: kafka
+        ports:
+            - "9092:9092"
+            - "29092:29092"
+        depends_on:
+            - "zookeeper"
+        deploy:
+            resources:
+                reservations:
+                    memory: "1g"
+        environment:
+            KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+            KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+            KAFKA_DEFAULT_REPLICATION_FACTOR: "1"
+            KAFKA_CONNECT_CONFLUENT_TOPIC_REPLICATION_FACTOR: "1"
+            KAFKA_CONFLUENT_TOPIC_REPLICATION_FACTOR: "1"
+            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "1"
+            KAFKA_NUM_PARTITIONS: 1
+            KAFKA_LISTENERS: "INTERNAL://kafka:29092,EXTERNAL://kafka:9092"
+            KAFKA_ADVERTISED_LISTENERS: "INTERNAL://kafka:29092,EXTERNAL://kafka:9092"
+            KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT"
+            KAFKA_INTER_BROKER_LISTENER_NAME: "INTERNAL"
+
+    kafka-ui:
+        image: provectuslabs/kafka-ui
+        container_name: kafka-ui
+        ports:
+            - "8181:8080"
+        restart: always
+        depends_on:
+            kafka:
+                condition: service_started
+        environment:
+            KAFKA_CLUSTERS_0_NAME: "local"
+            KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "kafka:29092"
+
+    kconnect:
+        image: debezium/connect:2.5.1.Final
+        ports:
+            - 8083:8083
+        environment:
+            BOOTSTRAP_SERVERS: "kafka:29092"
+            OFFSET_FLUSH_INTERVAL_MS: 5000
+            CONFIG_STORAGE_TOPIC: my_connect_configs
+            OFFSET_STORAGE_TOPIC: my_connect_offsets
+            STATUS_STORAGE_TOPIC: my_connect_statuses
+        depends_on:
+            - kafka
+            - zookeeper
