@@ -1,0 +1,36 @@
+# Number of people
+2
+
+# Names of people
+Kaustuv
+Aditi
+
+# Transactions
+# Amount payer payment_type uneven_payees uneven_amounts
+18.75 1 even
+8.20 1 even
+40 1 even
+25 1 even
+40 2 even
+18 2 even
+75 1 even
+31 2 even
+35 2 even
+11 1 even
+3 1 even
+30 2 even
+20 1 1
+145 2 even
+# 145 2 uneven 1,2 45,100
+20 2 even
+75 1 even
+40 2 even
+17 2 even
+23 1 even
+55 1 even
+12 2 even
+40 1 even
+21 2 even
+10 2 even
+35 1 even
+11.50 1 even

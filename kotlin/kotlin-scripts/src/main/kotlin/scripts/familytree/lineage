@@ -1,0 +1,77 @@
+id001..pGangaram..lChakraborty..gm..z1
+id002..pBijayram..lChakraborty..gm..fd001..z1
+id003..pRamnidhi..lChakraborty..gm..fd002..z1
+id004..pRamprasad..lChakraborty..gm..fd003..z1
+id005..pRamchandra..lChakraborty..gm..fd004..z1
+id006..pJodunath..lChakraborty..gm..fd005..z1
+id007..pJagatmohini..lChakraborty..gf..z1
+pd006 d007..e2..gm
+id008..pAnukul..lChakraborty..gm..z1..fd006..md007..O1
+id009..pAtul Chandra..lChakraborty..gm..z1..fd006..md007..O2
+id010..pAnil..lChakraborty..gm..z1..fd006..md007..O3
+id011..pSnehalata..lChakraborty..gf..z1
+pd009 d011..e2..gm
+id012..pSukumar..lChakraborty..gm..z1..fd009..md011..O1
+id013..pSubhod Kumar..lChakraborty..gm..z1..fd009..md011..O2
+id014..pRamkrishna..lChakraborty..gm..z1..fd009..md011..O3
+id015..pJotirmoyee..lChakraborty..gf..z1
+pd013 d015..e2..gm
+idJotirmoyee2..pJotirmoyee..lChakraborty..gf..z1
+pd012 dJotirmoyee2..e2..gm
+id016..pTapas..lChakraborty..gm..fd0013..md015..O1
+id017..pGitasree..lBhattacharyya..gf..fd0013..md015..O2
+idManas..pManas..lChakrabarti..gm..fd0013..md015..O3
+id019..pPiyali..lBhattacharyya..gf..fd0013..md015..O4
+id020..pSukla..lChakraborty..gf..z1
+pd016 d020..e2..gm
+id021..pDipankar..lBhattacharyya..gm
+pd017 d021..e2..gm
+id022..pKushal..lBhattacharyya..gm
+pd019 d022..e2..gm
+
+imPhakirchand..pPhakirchand..lGhosh..gm..z1
+imSurendranath..pSurendranath..lGhosh..gm..z1..fmPhakirchand
+imChapalabala..pChapalabala..lGhosh..gf..z1
+pmSurendranath mChapalabala..e2..gm
+imRani..pRani..lBiswas..gf..z1..mmChapalabala..fmSurendranath..O1
+imHasi..pHasi..lDasgupta..gf..mmChapalabala..fmSurendranath..O2
+imDilip..pDilip..lGhosh..gm..z1..mmChapalabala..fmSurendranath..O3
+imSunil..pSunil..lDasgupta..gm
+pmSunil mHasi..e2..gm
+imDola..pDola..lGhosh..gf
+pmDilip mDola..e2..gm
+imRamit..pRamit..lGhosh..gm..mmDola..fmDilip
+
+imRajkrishna..pRajkrishna..lBiswas..gm..z1
+imKamini..pKamini..lBiswas..gf..z1
+pmRajkrishna mKamini..e2..gm
+im005..pDhirendranath..lBiswas..gm..z1..mmKamini..fmRajkrishna
+im006..pBimala..lBiswas..gf..z1
+pm005 m006..e2..gm
+im007..pDurga Das..lBiswas..gm..z1..dm005..mm006
+pm007 mRani..e2..gm
+
+im008..pMitra..lGhosh..gf..dm007..mmRani..O1
+imChitra..pChitra..lChakrabarti..gf..dm007..mmRani..O2
+im010..pSamit..lBiswas..gm..dm007..mmRani..O3
+pdManas mChitra..e2..gm
+im011..pTapabroto..lGhosh..gm
+pm008 m011..e2..gm
+
+im012..pBondita..lBose..gf
+im013..pAsoke Kumar..lBose..gm
+pm013 m012..e2..gm
+imAruna..pAruna..lBiswas..gf..fm013..mm012
+pm010 mAruna..e2..gm
+imShourjya..pShourjya..lBiswas..gm..fm010..mAruna
+
+imSudarshana..pSudarshana..lChatterjee..gf..fm011..mm008
+imKaushik..pKaushik..lChatterjee..gm
+pmSudarshana mKaushik..e2..gm
+imIndrayudh..pIndrayudh..lChatterjee..gm..mmSudarshana..fmKaushik..O1
+imAntoreep..pAntoreep..lChatterjee..gm..mmSudarshana..fmKaushik..O2
+
+iMouli..pMouli..lChakrabarti..gf..mmChitra..fdManas..O1
+iKaustuv..pKaustuv..lChakrabarti..gm..mmChitra..fdManas..O2
+iAditi..pAditi..lChakrabarti..gf
+pKaustuv Aditi..e2..gm
