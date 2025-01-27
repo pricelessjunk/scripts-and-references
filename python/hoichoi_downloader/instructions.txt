@@ -1,0 +1,27 @@
+will need a folder called "files" to output. And as input "response" and the first curl get request
+
+
+
+
+
+batch rename
+---------------
+
+ls -1 | grep ep_09 | while read l; do mv $l s02e09_$(echo $l|cut -d '_' -f 8 ); done
+
+-d delimiter
+-f file split (starts at 1)
+
+Create input file list
+----------------------
+
+ls -1| while read l; do echo file \'$l\' >> input.txt; done
+
+merge
+------------
+
+ffmpeg -f concat -i input.txt -c copy output.ts
+
+Change to mkv
+---------------------
+sudo apt install mkvtoolnix mkvtoolnix-gui   (mplayer if codec is not found. I had smplayer)

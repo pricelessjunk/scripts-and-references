@@ -1,0 +1,8 @@
+capture-01.cap has a password N0tf0rfr33$
+
+pass.dict should contain the password to crack
+
+
+Command used
+
+aircrack-ng -l keys.txt capture-01.cap -w pass.dict

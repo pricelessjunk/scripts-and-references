@@ -1,0 +1,8 @@
+
+BSSID, First time seen, Last time seen, channel, Speed, Privacy, Cipher, Authentication, Power, # beacons, # IV, LAN IP, ID-length, ESSID, Key
+CC:CE:1E:6A:2C:A7, 2020-06-06 11:04:36, 2020-06-06 11:05:41, 11, 195, WPA2, CCMP, PSK, -44,      388,      554,   0.  0.  0.  0, 254, Incubus's Lair, 
+
+Station MAC, First time seen, Last time seen, Power, # packets, BSSID, Probed ESSIDs
+64:DB:43:46:AA:BD, 2020-06-06 11:05:05, 2020-06-06 11:05:41, -54,      633, CC:CE:1E:6A:2C:A7,Incubus's Lair
+40:83:1D:4A:D4:6B, 2020-06-06 11:04:36, 2020-06-06 11:05:40,   0,      223, CC:CE:1E:6A:2C:A7,
+
