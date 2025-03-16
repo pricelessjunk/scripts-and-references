@@ -12,7 +12,7 @@ from common import Common
 from common import OUTPUT_PATH
 
 urls = sys.argv[1 : len(sys.argv)]
-# urls = ["https://pics-x.com/pornstar/6907/stacie-jaxxx"]
+urls = ["https://pics-x.com/pornstar/7602/natalia-starr"]
 
 class Picx(Common):
     def __init__(self):
@@ -89,4 +89,4 @@ class Picx(Common):
 
 if __name__ == "__main__":
     picx = Picx()
-    picx.main(urls)
+    picx.main(urls, True)

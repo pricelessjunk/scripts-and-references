@@ -9,9 +9,44 @@ from pyquery import PyQuery
 import requests
 from tqdm import tqdm
 
+# curl ^"https://pics-x.com/pornstar/7602/natalia-starr^" ^
+#   -H ^"accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8^" ^
+#   -H ^"accept-language: en-US,en;q=0.8^" ^
+#   -H ^"cache-control: max-age=0^" ^
+#   -b ^"XSRF-TOKEN=eyJpdiI6ImtOUGtXTkZPTTdFOUl5MDN5TlB4RFE9PSIsInZhbHVlIjoiR2RaVXNUMENzK1pqb2RSREg0TU5TNVFlSGJ2SU9zTWc0Y1I3K2VnT1pmcHpHYThEWnZiRHpJZ2ZyTC91QlB4TWFEUTh4d0doUWRGdWVUUE12WHVEUndvQzBaYVNDOUVHODFXdnVyd05rTC9VVE5ERUxHam9uQUh4TU45Z0F3WTUiLCJtYWMiOiI1NzhiODA3YzE3OWNlNDcxOWE1ZTRkMjlhMmM2NWIyZjJmN2YxZTBhYjBiZDM0Yjk5NzQ1MzYzNzE5MzIzMjBhIiwidGFnIjoiIn0^%^3D; pics_x_session=eyJpdiI6IklISEZOVDhYT0FWQk84amxBOWY3eFE9PSIsInZhbHVlIjoic0FLWWRpYjcwOHBYN2hJVHArOVpDQSsrLzlJNGhZL1ZnTHV0MC9vaURlMDFpVEVjTnYvV0tQZVplV0VTd0dFZDBhazFtMUlVKytDNW0ycFhURlF0UGlaNkpBT0xzTFRGNWg4N1diMFEweHpwU3hBVzZ2ei9CbEtKaHZnUWlHSnoiLCJtYWMiOiI2NDJmMWY4ZDQ0YmVhODI5NGI1MGY5MGMzZjZiMzBiMjYyZWJlZWY3Y2QwM2JmZjhhZWE5NmVmMmVkNGJkOWMyIiwidGFnIjoiIn0^%^3D^" ^
+#   -H ^"if-none-match: W/^\^"12315a346a87c5ba083a8507e69f3ebd^\^"^" ^
+#   -H ^"priority: u=0, i^" ^
+#   -H ^"sec-ch-ua: ^\^"Chromium^\^";v=^\^"134^\^", ^\^"Not:A-Brand^\^";v=^\^"24^\^", ^\^"Brave^\^";v=^\^"134^\^"^" ^
+#   -H ^"sec-ch-ua-mobile: ?0^" ^
+#   -H ^"sec-ch-ua-platform: ^\^"Windows^\^"^" ^
+#   -H ^"sec-fetch-dest: document^" ^
+#   -H ^"sec-fetch-mode: navigate^" ^
+#   -H ^"sec-fetch-site: none^" ^
+#   -H ^"sec-fetch-user: ?1^" ^
+#   -H ^"sec-gpc: 1^" ^
+#   -H ^"upgrade-insecure-requests: 1^" ^
+#   -H ^"user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36^"
+
 START_BASE_1 = 1
 SKIP_TO_LINK = START_BASE_1
-HDR = {"User-Agent": "Mozilla/5.0"}
+HDR = {"User-Agent": "Mozilla/5.0", "Accept-Language": "en-US,en;q=0.8"}
+# HDR = {
+#     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36",
+#     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+#     "Accept-Language": "en-US,en;q=0.8",
+#     "Cache-Control": "no-cache",
+#     "XSRF-TOKEN": "eyJpdiI6ImtOUGtXTkZPTTdFOUl5MDN5TlB4RFE9PSIsInZhbHVlIjoiR2ZaVXNUMENzK1pqb2RSREg0TU5TNVFlSGJ2SU9zTWc0Y1I3K2VnT1pmcHpHYThEWnZiRHpJZ2ZyTC91QlB4TWFEUTh4d0doUWRGdWVUUE12WHVEUndvQzBaYVNDOUVHODFXdnVyd05rTC9VVE5ERUxHam9uQUh4TU45Z0F3WTUiLCJtYWMiOiI1NzhiODA3YzE3OWNlNDcxOWE1ZTRkMjlhMmM2NWIyZjJmN2YxZTBhYjBiZDM0Yjk5NzQ1MzYzNzE5MzIzMjBhIiwidGFnIjoiIn0",
+#     "pics_x_session": "eyJpdiI6IklISEZOVDhYT0FWQk84amxBOWY3eFE9PSIsInZhbHVlIjoic0FLWWRpYjcwOHBYN2hJVHArOVpDQSsrLzlJNGhZL1ZnTHV0MC9vaURlMDFpVEVjTnYvV0tQZVplV0VTd0dFZDBhazFtMUlVKytDNW0ycFhURlF0UGlaNkpBT0xzTFRGNWg4N1diMFEweHpwU3hBVzZ2ei9CbEtKaHZnUWlHSnoi",
+#     "sec-ch-ua": '"Chromium";v="134", "Not:A-Brand";v="24", "Brave";v="134"',
+#     "sec-ch-ua-mobile": "?0",
+#     "sec-ch-ua-platform": '"Windows"',
+#     "sec-fetch-dest": "document",
+#     "sec-fetch-mode": "navigate",
+#     "sec-fetch-site": "none",
+#     "sec-fetch-user": "?1",
+#     "sec-gpc": "1",
+#     "Upgrade-Insecure-Requests": "1"
+# }
 OUTPUT_PATH = "output"
 
 class Common:
@@ -112,8 +147,9 @@ class Common:
     def get_pyquery(self, url):
         try:
             page = urlopen(Request(url, headers=HDR))
-        except Exception:
+        except Exception as e:
             print("Error in link " + url)
+            print(repr(e))
             self.errors_url.append(url)
             return None
         html = bs(page, features="html.parser").decode("utf8")
