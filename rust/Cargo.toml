@@ -1,5 +1,0 @@
-[workspace]
-
-members = [
-    "rename_compact_collection",
-]
