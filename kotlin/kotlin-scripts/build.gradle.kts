@@ -1,19 +1,23 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	kotlin("jvm") version "1.8.21"
+	kotlin("jvm") version "2.1.0"
+	application
 }
 
 group = "com.example"
 version = "0.0.1-SNAPSHOT"
 
-// Source
-java {
-	sourceCompatibility = JavaVersion.VERSION_17
-}
-
 repositories {
 	mavenCentral()
+}
+
+application {
+	var mainClassName = findProperty("mainClass") as String?
+	if (mainClassName == null) {
+		mainClassName = "helloworld.HelloWorldKt"
+	} 
+	mainClass.set(mainClassName)
 }
 
 dependencies {
@@ -24,10 +28,10 @@ dependencies {
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs += "-Xjsr305=strict"
-		jvmTarget = "17"
+		jvmTarget = "21"
 	}
 }
 
-tasks.withType<Test> {
-	useJUnitPlatform()
-}
+// tasks.withType<Test> {
+// 	useJUnitPlatform()
+// }

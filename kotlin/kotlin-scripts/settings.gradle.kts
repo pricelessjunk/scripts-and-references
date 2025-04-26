@@ -1,1 +1,1 @@
-rootProject.name = "kotlin-tutorial"
+rootProject.name = "kotlin-scripts"

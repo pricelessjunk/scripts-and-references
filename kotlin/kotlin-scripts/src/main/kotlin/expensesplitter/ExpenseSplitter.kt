@@ -1,7 +1,10 @@
-package scripts.expensesplitter
+package expensesplitter
 
 import java.io.File
 
+/**
+ * For command see README.md
+ */
 fun main(args: Array<String>) {
     val lines = readFileAsLinesUsingUseLines(args[0])
 
