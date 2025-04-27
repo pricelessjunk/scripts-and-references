@@ -1,4 +1,12 @@
-use std::{ collections::HashMap, env::{ args, current_dir }, error::Error, fs, path::PathBuf };
+use std::{
+    collections::HashMap,
+    env::{ args, current_dir },
+    error::Error,
+    fs::{ self, read, OpenOptions },
+    path::PathBuf,
+};
+
+const BUFFER_SIZE: usize = 100 * 1024 * 1024;
 
 fn main() {
     /*-> Result<(), Box<dyn Error>>*/ let args: Vec<String> = args().collect();
@@ -8,9 +16,9 @@ fn main() {
 
     let file_map = read_dir(&src, &dest.to_string_lossy().to_string()).unwrap();
 
-    file_map.iter().for_each(|entry| {
-        println!("{:?} -> {}", *entry.0, *entry.1);
-    });
+    // file_map.iter().for_each(|entry| {
+    //     println!("{:?} -> {}", *entry.0, *entry.1);
+    // });
 
     // Ok(())
 }
@@ -60,4 +68,12 @@ fn read_dir(
     Ok(file_map)
 }
 
-// fn copy(source: PathBuf, targer: PathBuf, bytes: Vec<u8>) {}
+fn copy(file_map: HashMap<PathBuf, String>) {
+    let mut buffer = Vec::<u8>::with_capacity(BUFFER_SIZE);
+
+    file_map.iter().for_each(|(src_path, dest_str)| {
+        let src_file = OpenOptions::new().read(true).open(src_path);
+
+        src_file
+    });
+}
