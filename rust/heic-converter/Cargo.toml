@@ -1,0 +1,8 @@
+[package]
+name = "heic-converter"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+image = "0.25.6"
+libheif-rs = { version = "2.1" , default-features = false, features = ["v1_17"]}
