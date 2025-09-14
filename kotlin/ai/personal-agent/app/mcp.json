@@ -1,0 +1,7 @@
+{
+    "mcpServers": {
+        "todoist-mpc-server": {
+            "url": "http://localhost:8090/sse"
+        }
+    }
+}
