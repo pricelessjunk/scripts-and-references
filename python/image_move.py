@@ -8,16 +8,24 @@ Eg.
 
 python3 verify_names.py
 python3 verify_names.py path1 path2
+
+
+put * and name
+• Lune | Clair Obscur *_black
+• Lune | Clair Obscur *
 '''
 import os
 import shutil
+import sys
 
 from thefuzz import fuzz
+from natsort import natsorted
 
 METADATA_FILENAME = "meta.txt"
 REMOTE_ROOT = "/Volumes/samba/hdd2tb/wyvern_wings/anime/desaria"
+#REMOTE_ROOT = "/Volumes/samba/hdd2tb/wyvern_wings/anime/veilin"
 FUZZY_MATCH_THRESHOLD = 80
-DRY_RUN = True
+DRY_RUN = False if len(sys.argv) > 1 and sys.argv[1] == 'False' else True
 
 PATH = "/Users/kaustuv.chakrabarti/Downloads/delete/desaria"  # sys.argv[1:] if len(sys.argv) > 1 else "."
 
@@ -39,25 +47,25 @@ def walkme(cur_dir):
 
 
 def parse_files(cur_dir):
-    image_names = get_image_names(cur_dir)
+    image_names = get_metadata(cur_dir)
 
     for root, dirs, files in os.walk(cur_dir, topdown=False):
         if len(image_names) > 0:
             i = 0
-            sorted_files = sorted(files, key=lambda item: (len(item), item))
+            # sorted_files = sorted(files, key=lambda item: (len(item), item))
+            sorted_files = natsorted(files)
             for f in sorted_files:
                 if f.endswith("jpg") or f.endswith("heic") or f.endswith("png"):
                     match_dir = fuzzy_match(image_names[i])
 
                     if match_dir is not None:
-                        print("match found for " + image_names[i] + " / " + f + " : " + match_dir)
+                        print("\u2705 " + image_names[i] + " \u2B50 " + f + " \u2B95 " + match_dir)
                         source_abs_name = str(os.path.join(root, f))
                         target_abs_name = str(os.path.join(match_dir, f))
-                        # os.rename(source_abs_name, target_abs_name )
                         if not DRY_RUN:
                             shutil.move(source_abs_name, target_abs_name)
                     else:
-                        print("No match for " + image_names[i] + " / " + f)
+                        print("\u274c " + image_names[i] + " \u2B50 " + f)
 
                     i += 1
 
@@ -82,7 +90,7 @@ def fuzzy_match(file_name):
     return max_root
 
 
-def get_image_names(cur_dir):
+def get_metadata(cur_dir):
     p = os.path.join(cur_dir, METADATA_FILENAME)
     names = []
 
@@ -93,13 +101,35 @@ def get_image_names(cur_dir):
         for name in image_names:
             name = name.replace('•', '').strip()
             if name != "":
-                name = name.split("|")
-                if len(name) > 1:
-                    names.append(name[1].strip() + " - " + name[0].strip())
-                else:
-                    names.append(name[0].strip())
-
+                names.append(create_dir_safely(name))
     return names
+
+def create_dir_safely(entry):
+    folder_name = entry  # left part of *
+    parent_dir = os.path.join(REMOTE_ROOT)    # right part of *
+    if "*" in entry:
+        # Lune | Clair *_black
+        parts=entry.split("*")
+        if len(parts) > 1:
+            parent_dir = os.path.join(REMOTE_ROOT, parts[1])
+        folder_name = parts[0]
+
+    # Marie Rose | Dead Or Alive
+    folder_names = folder_name.split("|")
+    if len(folder_names) > 1:
+        actual_folder_name = folder_names[1].strip() + " - " + folder_names[0].strip()
+    else:
+        actual_folder_name = folder_names[0].strip()
+
+    if "*" in entry:
+        # Create dir if not exists
+        folder_name_abs_path = os.path.join(parent_dir, actual_folder_name)
+        if not os.path.exists(folder_name_abs_path):
+            print("\u2133 " + folder_name_abs_path)
+            os.makedirs(folder_name_abs_path)
+            remote_dirs.append(folder_name_abs_path)
+
+    return actual_folder_name
 
 
 if __name__ == "__main__":
