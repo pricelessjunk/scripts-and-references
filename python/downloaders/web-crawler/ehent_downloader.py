@@ -3,6 +3,12 @@ pip install bs4 pyquery requests tqdm
 
 Syntax -
     python ehent_downloader url1 url2
+
+Good Prefixes
+[KALA AI NSFW]
+[Artkoikoi]
+[Sunny]
+[UnrealBeautyAIMIX]
 """
 
 import os
