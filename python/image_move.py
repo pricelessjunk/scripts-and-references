@@ -23,7 +23,7 @@ from natsort import natsorted
 
 METADATA_FILENAME = "meta.txt"
 REMOTE_ROOT = "/Volumes/samba/hdd2tb/wyvern_wings/anime/desaria"
-#REMOTE_ROOT = "/Volumes/samba/hdd2tb/wyvern_wings/anime/veilin"
+# REMOTE_ROOT = "/Volumes/samba/hdd2tb/wyvern_wings/anime/veilin"
 FUZZY_MATCH_THRESHOLD = 80
 DRY_RUN = False if len(sys.argv) > 1 and sys.argv[1] == 'False' else True
 
@@ -59,7 +59,8 @@ def parse_files(cur_dir):
                     match_dir = fuzzy_match(image_names[i])
 
                     if match_dir is not None:
-                        print("\u2705 " + image_names[i] + " \u2B50 " + f + " \u2B95 " + match_dir)
+                        not_perfect_match_symbol = "" if os.path.split(match_dir)[-1] == image_names[i] else "\u2757\u2757\u2757"
+                        print("\u2705 " + image_names[i] + " \u2B50 " + f + " \u2B95 " + match_dir + not_perfect_match_symbol)
                         source_abs_name = str(os.path.join(root, f))
                         target_abs_name = str(os.path.join(match_dir, f))
                         if not DRY_RUN:
@@ -90,6 +91,7 @@ def fuzzy_match(file_name):
     return max_root
 
 
+# This reads the information from the metadata.txt file
 def get_metadata(cur_dir):
     p = os.path.join(cur_dir, METADATA_FILENAME)
     names = []
